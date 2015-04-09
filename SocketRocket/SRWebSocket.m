@@ -1184,6 +1184,11 @@ static const char CRLFCRLFBytes[] = {'\r', '\n', '\r', '\n'};
     BOOL didWork = NO;
     
     if (self.readyState >= SR_CLOSING) {
+        dispatch_async(_workQueue, ^{
+            _closeCode = SRStatusCodeNormal;
+            [self _disconnect];
+        });
+
         return didWork;
     }
     
